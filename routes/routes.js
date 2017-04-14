@@ -1,8 +1,7 @@
 module.exports = function(app) {
 	app.get('/', function(req, res) {
 		res.render('index', {
-			placeholder: "whatever",
-			layout: false
+			placeholder: "whatever"
 		})
 	})
 
