@@ -10,29 +10,16 @@ var mongoose = require('mongoose')
 var app = express()
 var port = process.env.PORT || 8080
 
-
-// // Database configuration
-// var databaseUrl = process.env.MONGODB_URI || "newscrape_db";
-// var collections = ["articles"];
-// // Hook mongojs config to db variable
-// var db = mongojs(databaseUrl , collections);
-// // Log any mongojs errors to console
-// db.on("error", function(error) {
-//   console.log("Database Error:", error);
-// });
-
-
-
-
 mongoose.Promise = Promise;
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/newscrape_db');
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/newscrape_db')
+var db = mongoose.connection
+db.on('error', console.error.bind(console, 'connection error:'))
 db.once('open', function() {
   console.log(`Mongoose connected to database.`)
 });
 
 app.use(logger("dev"));
+
 app.use(bodyParser.urlencoded({
   extended: false
 }));
@@ -43,6 +30,8 @@ app.set('view engine', 'hbs')
 
 
 require('./routes/routes')(app)
+
+
 
 
 
