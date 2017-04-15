@@ -1,11 +1,25 @@
+var request = require('request-promise')
+var cheerio = require('cheerio')
+
 var Article = require('../models/Article.js')
 var Note = require('../models/Note.js')
 
 module.exports = function(app) {
 	app.get('/', (req, res) => {
-		res.render('index', {
-			placeholder: "whatever"
-		})
+		request("https://www.reddit.com/r/webdev", (error, response, html) => {
+			var $ = cheerio.load(html)
+			var result = []
+			$("p.title").each(function(i, element) {
+				var title = $(this).text()
+				var link = $(element).children().attr("href")
+				result.push({
+					title: title,
+					link: link
+				})
+			})
+			console.log(result)
+			res.render('index', {articles: result})
+		})		
 	})
 
 	app.get('/scrape', (req, res) => {
@@ -20,5 +34,16 @@ module.exports = function(app) {
 			}).catch((err) => {
 				res.send(`Error:${err}`)
 			})
+	})
+
+	app.post('/article', (req, res) => {
+		Article.create(req.body, function(err, article) {
+			if(err) {
+				res.send('error')
+			} else {
+				console.log('saved article')
+				res.json(article)
+			}
+		})
 	})
 }

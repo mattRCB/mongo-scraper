@@ -1,8 +1,6 @@
 var express = require('express')
 var path = require('path')
 var bodyParser = require('body-parser')
-var request = require('request')
-var cheerio = require('cheerio')
 var exphbs = require('express-handlebars')
 var logger = require('morgan')
 var mongoose = require('mongoose')
@@ -19,7 +17,7 @@ db.once('open', function() {
 });
 
 app.use(logger("dev"));
-
+app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
   extended: false
 }));

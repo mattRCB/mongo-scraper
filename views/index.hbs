@@ -4,6 +4,12 @@
 	<title>News-crape</title>
 </head>
 <body>
-	{{ placeholder }}
+	{{#each articles}}
+		<div class='article'>
+			<h2>{{title}}</h2>
+			<h4>{{link}}</h4>
+			<hr>
+		</div>
+	{{/each}}
 </body>
 </html>
