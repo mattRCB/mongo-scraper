@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+<!-- 		<link rel="stylesheet" type="text/css" href="./assets/css/style.css">  -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://code.jquery.com/jquery.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 	<title>News-crape</title>
 </head>
 <body>
@@ -8,8 +13,21 @@
 		<div class='article'>
 			<h2>{{title}}</h2>
 			<h4>{{link}}</h4>
+			<button id="save">Save</button>
 			<hr>
 		</div>
 	{{/each}}
+
+
+	<script>
+		$(document).on('click', '#save', function() {
+			var article = {};
+			article.title = $(this).siblings('h2').text();
+			article.link = $(this).siblings('h4').text();
+			$.post("/article", article, function(savedArticle) {
+				alert('Saved one article to database.');
+			});
+		});
+	</script>
 </body>
 </html>
